@@ -2,7 +2,7 @@
 proyecto Node,js
 
 
-primo instalar nodemon en la carpeta del proyecto de no tenerlo global:
+primero instalar nodemon en la carpeta del proyecto de no tenerlo global:
 
 npm i nodemon
 

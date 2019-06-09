@@ -1,0 +1,51 @@
+{{>header }}
+
+
+<div class="container p-4">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <form action="/crear" method="get">
+            <div class="form-group">
+              <input type="number" class='form-Control' name="id" placeholder='ID' required autofocus>
+            </div>
+            <div class="form-group">
+              <input type="text" name="asignatura" class='form-Control' placeholder='Nombre' required>
+            </div>
+            <div class="form-group">
+              <label for="descripcion">Descripcion del curso</label>
+              <textarea class="form-control" name="descripcion" rows="2" required></textarea>
+            </div>
+            <div class="form-group">
+              <input type="number" name="valor" class='form-Control' placeholder='Valor' required>
+            </div>
+            <div class="form-group">
+              <label for="modalidad">Modalidad</label>
+              <select class="form-control" name="modalidad">
+                <option>Presencial</option>
+                <option>Virtual</option>
+              </select>
+            </div>
+            <div class="form-group">
+
+              <input type="text" name="intensidad" class='form-Control' placeholder='intesidad horario'>
+            </div>
+
+            <div class="form-group">
+              <button class="btn btn-success btn-block">Crear</button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+
+
+{{>footer}}

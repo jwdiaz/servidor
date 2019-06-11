@@ -53,43 +53,20 @@ const guardarCurso = () => {
 app.get("elim", (req, res) => {
   console.log(req.body);
 });
-app.get("/eliminarCurso/:id", (req, res) => {
-	
-	console.log("Eliminar curso")
-  	
+app.get("/eliminarCurso", (req, res) => {
   listarCurso();
-  let id = req.params.id
+  let id = parseInt(id);
 
   let nuevo = listaCurso.filter(est => est.id != id);
   listaCurso = nuevo;
 
-  guardarCurso();
+  guardar();
   res.render("listaCurso", {
     titulo: "Asignaturas programadas",
     success: "Proceso exitos",
     listarCurso
   });
 });
-
-app.get("/editarCurso/:id", (req, res) => {
-	
-	console.log("Editar curso")
-  	
-  listarCurso();
-  let id = req.params.id
-  console.log("Valor id es de " + id)
-
-  let nuevo = listaCurso.filter(est => est.id != id);
-  listaCurso = nuevo;
-
-  guardarCurso();
-  res.render("listaCurso", {
-    titulo: "Asignaturas programadas",
-    success: "Proceso exitos",
-    listarCurso
-  });
-});
-
 app.get("/crear", (req, res) => {
   listarCurso();
   let asig = {
@@ -165,6 +142,59 @@ app.get("/crearCurso", (req, res) => {
   });
 });
 
+const listarUsuarios = () => {
+  try {
+    listaUsuarios = require("./usuarios.json");
+  } catch (error) {
+    listaUsuarios = [];
+  }
+};
+
+
+app.get("/listaUsuarios", (req, res) => {
+  listarUsuarios()
+  console.log("Invocar funcion")
+  console.log(listaUsuarios)
+  res.render("listaUsuarios", {
+      titulo: "Usuarios asignados",
+      listaUsuarios
+  });
+});
+
+app.get("/crearUsuario", (req, res) => {
+  res.render("formUsuarios", {
+    titulo: "Crear nuevo usuario"
+  });
+});
+
+app.get("/guardarUsuario", (req, res) => {
+  listarUsuarios()
+  let asig = {
+    documentoId: req.query.documentoId,
+    nombre: req.query.nombre,
+    correoElectronico: req.query.correoElectronico,
+    telefono: req.query.telefono,
+    tipoUsuario: req.query.tipoUsuario
+  };
+
+  let duplicado = listaUsuarios.find(usuars => usuars.documentoId == asig.documentoId);
+  if (!duplicado) {
+    listaUsuarios.push(asig);
+
+    guardarCurso();
+
+    res.render("listaUsuarios", {
+      titulo: "Usuario registrado",
+      success: "Proceso exitoso",
+      listaUsuarios
+    });
+  } else {
+    res.render("formUsuarios", {
+      titulo: "Crear nuevo usuario",
+      message: "el usuario con Numero de Identificacion: " + asig.documentoId + ", ya se encuentra registrado"
+    });
+  }
+});
 
 app.get("/login", (req, res) => {
   res.render("formIngreso", {
@@ -172,6 +202,49 @@ app.get("/login", (req, res) => {
   });
 });
 
+
+app.all("/validar", (req, res) => {
+   
+  listarUsuarios()  
+  listaUsuariosRegistrados = [];
+  let asig = {
+    documentoId: req.query.documentoId
+  }; 	
+
+  let existe = listaUsuarios.find(usuars => usuars.documentoId == asig.documentoId);
+  if (existe) {
+	  console.log(existe)
+    listaUsuariosRegistrados.push(existe)
+	actualizarUsuariosRegistrados()
+	return res.redirect('/');
+  } else {
+    return res.render("error", {
+      titulo: "Problemas al ingresar a Red Schools",
+      message: "El usuario con ID " + asig.documentoId + " no se encuentra registrado"
+    });
+  }
+});
+
+
+const listarUsuarioRegistrado = () => {
+  try {
+    listaUsuariosRegistrados = require("./src/usuariosRegistrados.json");
+  } catch (error) {
+    listaUsuariosRegistrados = [];
+  }
+};
+
+const actualizarUsuariosRegistrados = () => {
+  let datos = JSON.stringify(listaUsuariosRegistrados);
+
+  listaUsuariosRegistrados.forEach(estudiante => {
+    console.log(estudiante.asignatura + estudiante.valor);
+  });
+
+  fs.writeFile("./src/usuariosRegistrados.json", datos, err => {
+    if (err) throw err;
+  });
+};
 
 app.listen(3000, () => {
   console.log("escuchando el puerto 3000");

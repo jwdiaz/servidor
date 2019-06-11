@@ -81,8 +81,7 @@ hbs.registerHelper("todoscursos", () => {
       "</td>" +
       "<td>" +
       curso.estado +
-      '</td> <td> <a class="btn btn-secondary" href="editEstado/'+curso.id+'"> Editar estado\
-  </a></td></tr>';
+      '</td></tr>';
   });
   texto = texto + "</tbody></table>";
   return texto;
@@ -115,7 +114,7 @@ hbs.registerHelper("lis", () => {
       <p class="m-2">Intesidad:  ' +
 curso.intensidad +
 '</p>\
-                    <a class="btn btn-danger" href="elim/'+curso.id+'">\
+                    <a class="btn btn-danger" href="eliminarCurso/'+curso.id+'">\
                         Eliminar  </a>\
                     <a class="btn btn-secondary" href="editarCurso/'+curso.id+'">\
                         Editar\
@@ -127,44 +126,5 @@ curso.intensidad +
   });
 
   texto = texto + "</div>";
-  return texto;
-});
-
-
-hbs.registerHelper("listaUsuarios", () => {
-  listaUsuario = require("./usuarios.json");
-  let texto =
-    '<table  class = "table table-striped">\
-                <thead class="thead-dark">\
-                <th> Documento ID </th>\
-                <th> Nombre </th>\
-                <th> Correo electronico </th>\
-                <th> Teleono </th>\
-                <th> Tipo de Usuario</th>\
-                </thead>\
-                <tbody>';
-
-  listaUsuario.forEach(usuario => {
-    texto =
-      texto +
-      "<tr>" +
-      "<td>" +
-      usuario.documentoId +
-      "</td>" +
-      "<td>" +
-      usuario.nombre +
-      "</td>" +
-      "<td>" +
-      usuario.correoElectronico +
-      "</td>" +
-      "<td>" +
-      usuario.telefono +
-      "</td>" +
-      "<td>" +
-      usuario.tipoUsuario +
-      '</td> <td> <a class="btn btn-secondary" href="editEstado/'+usuario.documentoId +'"> Editar estado\
-  </a></td></tr>';
-  });
-  texto = texto + "</tbody></table>";
   return texto;
 });

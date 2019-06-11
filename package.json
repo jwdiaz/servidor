@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon src/app"
   },
-  "author": "jamesdiaz1",
+  "author": "jdsancheztorres",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",

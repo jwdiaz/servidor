@@ -7,6 +7,7 @@ const flash = require("connect-flash");
 const dirNode_modules = path.join(__dirname, "../node_modules");
 
 listaCurso = [];
+listaUsuariosRegistrados = [];
 
 require("./helpers");
 
@@ -52,20 +53,43 @@ const guardarCurso = () => {
 app.get("elim", (req, res) => {
   console.log(req.body);
 });
-app.get("/eliminarCurso", (req, res) => {
+app.get("/eliminarCurso/:id", (req, res) => {
+	
+	console.log("Eliminar curso")
+  	
   listarCurso();
-  let id = parseInt(id);
+  let id = req.params.id
 
   let nuevo = listaCurso.filter(est => est.id != id);
   listaCurso = nuevo;
 
-  guardar();
+  guardarCurso();
   res.render("listaCurso", {
     titulo: "Asignaturas programadas",
     success: "Proceso exitos",
     listarCurso
   });
 });
+
+app.get("/editarCurso/:id", (req, res) => {
+	
+	console.log("Editar curso")
+  	
+  listarCurso();
+  let id = req.params.id
+  console.log("Valor id es de " + id)
+
+  let nuevo = listaCurso.filter(est => est.id != id);
+  listaCurso = nuevo;
+
+  guardarCurso();
+  res.render("listaCurso", {
+    titulo: "Asignaturas programadas",
+    success: "Proceso exitos",
+    listarCurso
+  });
+});
+
 app.get("/crear", (req, res) => {
   listarCurso();
   let asig = {
@@ -100,6 +124,7 @@ app.get("/crear", (req, res) => {
 app.set("view engine", "hbs");
 
 app.get("/", (req, res) => {
+	
   res.render("index", {
     titulo: "REDS SCHOOL"
   });
@@ -140,59 +165,6 @@ app.get("/crearCurso", (req, res) => {
   });
 });
 
-const listarUsuarios = () => {
-  try {
-    listaUsuarios = require("./usuarios.json");
-  } catch (error) {
-    listaUsuarios = [];
-  }
-};
-
-
-app.get("/listaUsuarios", (req, res) => {
-  listarUsuarios()
-  console.log("Invocar funcion")
-  console.log(listaUsuarios)
-  res.render("listaUsuarios", {
-      titulo: "Usuarios asignados",
-      listaUsuarios
-  });
-});
-
-app.get("/crearUsuario", (req, res) => {
-  res.render("formUsuarios", {
-    titulo: "Crear nuevo usuario"
-  });
-});
-
-app.get("/guardarUsuario", (req, res) => {
-  listarUsuarios()
-  let asig = {
-    documentoId: req.query.documentoId,
-    nombre: req.query.nombre,
-    correoElectronico: req.query.correoElectronico,
-    telefono: req.query.telefono,
-    tipoUsuario: req.query.tipoUsuario
-  };
-
-  let duplicado = listaUsuarios.find(usuars => usuars.documentoId == asig.documentoId);
-  if (!duplicado) {
-    listaUsuarios.push(asig);
-
-    guardarCurso();
-
-    res.render("listaUsuarios", {
-      titulo: "Usuario registrado",
-      success: "Proceso exitoso",
-      listaUsuarios
-    });
-  } else {
-    res.render("formUsuarios", {
-      titulo: "Crear nuevo usuario",
-      message: "el usuario con Numero de Identificacion: " + asig.documentoId + ", ya se encuentra registrado"
-    });
-  }
-});
 
 app.get("/login", (req, res) => {
   res.render("formIngreso", {
@@ -200,27 +172,6 @@ app.get("/login", (req, res) => {
   });
 });
 
-
-app.get("/validar", (req, res) => {
-	
-  let asig = {
-    documentoId: req.query.documentoId
-  };
-   
-  listarUsuarios() 	
-
-  let existe = listaUsuarios.find(usuars => usuars.documentoId == asig.documentoId);
-  if (existe) {
-    res.render("index", {
-    	titulo: "REDS SCHOOL - bienvenidos usuario " + asig.documentoId
-  	});
-  } else {
-    res.render("error", {
-      titulo: "Problemas al ingresar a Red Schools",
-      message: "El usuario con ID " + asig.documentoId + " no se encuentra registrado"
-    });
-  }
-});
 
 app.listen(3000, () => {
   console.log("escuchando el puerto 3000");

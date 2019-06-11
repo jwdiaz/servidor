@@ -1,18 +1,14 @@
 # servidor
-proyecto Node,js
+Aplicaciones Cloud Web - 2: Revisión de Node JS
 
+Para ejecutar este proyecto se deben realizar los siguientes pasos:
 
-primero instalar nodemon en la carpeta del proyecto de no tenerlo global:
+1) Instalar  el paquete nodemon en la carpeta del proyecto de no tenerlo global:
 
 npm i nodemon
 
-
-
-para ejecutarlo :
+2) Ejecutar el siguiente comando para ejecutar la aplicación
 
 npm run dev
 
-
-
-
-visualizar en el navegador 127.0.0.1:3000
+3) Desde un navegador se recomienda ejecutar la dirección 127.0.0.1:3000 o localhost:3000

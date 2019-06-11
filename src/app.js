@@ -159,6 +159,47 @@ app.get("/listaUsuarios", (req, res) => {
   });
 });
 
+app.get("/crearUsuario", (req, res) => {
+  res.render("formUsuarios", {
+    titulo: "Crear nuevo usuario"
+  });
+});
+
+app.get("/guardarUsuario", (req, res) => {
+  listarUsuarios()
+  let asig = {
+    documentoId: req.query.documentoId,
+    nombre: req.query.nombre,
+    correoElectronico: req.query.correoElectronico,
+    telefono: req.query.telefono,
+    tipoUsuario: req.query.tipoUsuario
+  };
+
+  let duplicado = listaUsuarios.find(usuars => usuars.documentoId == asig.documentoId);
+  if (!duplicado) {
+    listaUsuarios.push(asig);
+
+    guardarCurso();
+
+    res.render("listaUsuarios", {
+      titulo: "Usuario registrado",
+      success: "Proceso exitoso",
+      listaUsuarios
+    });
+  } else {
+    res.render("formUsuarios", {
+      titulo: "Crear nuevo usuario",
+      message: "el usuario con Numero de Identificacion: " + asig.documentoId + ", ya se encuentra registrado"
+    });
+  }
+});
+
+app.get("/login", (req, res) => {
+  res.render("formIngreso", {
+    titulo: "Bienvenidos"
+  });
+});
+
 app.listen(3000, () => {
   console.log("escuchando el puerto 3000");
 });

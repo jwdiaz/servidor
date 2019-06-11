@@ -1,0 +1,50 @@
+{{>header }}
+
+
+<div class="container p-4">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <form action="/guardarUsuario" method="get">
+            <div class="form-group">
+              <label for="documentoId">Documento Id</label>
+              <input type="text" name="documentoId" class='form-Control' placeholder='Documento Identidad' required>
+            </div>
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" name="nombre" class='form-Control' placeholder='Nombre' required>
+            </div>
+            <div class="form-group">
+              <label for="correoElectronico">Correo Electronico</label>
+              <input type="email" name="correoElectronico">
+            </div>
+            <div class="form-group">
+              <label for="telefono">Telefono</label>
+              <input type="text" name="telefono" class='form-Control' placeholder='Telefono' required>
+            </div>
+            <div class="form-group">
+              <label for="tipoUsuario">Tipo de usuario</label>
+              <select class="form-control" name="tipoUsuario">
+                <option selected>Aspirante</option>
+                <option>Coordinador</option>
+                <option>Interesado</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-success btn-block">Crear</button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+
+
+{{>footer}}

@@ -200,6 +200,28 @@ app.get("/login", (req, res) => {
   });
 });
 
+
+app.get("/validar", (req, res) => {
+	
+  let asig = {
+    documentoId: req.query.documentoId
+  };
+   
+  listarUsuarios() 	
+
+  let existe = listaUsuarios.find(usuars => usuars.documentoId == asig.documentoId);
+  if (existe) {
+    res.render("index", {
+    	titulo: "REDS SCHOOL - bienvenidos usuario " + asig.documentoId
+  	});
+  } else {
+    res.render("error", {
+      titulo: "Problemas al ingresar a Red Schools",
+      message: "El usuario con ID " + asig.documentoId + " no se encuentra registrado"
+    });
+  }
+});
+
 app.listen(3000, () => {
   console.log("escuchando el puerto 3000");
 });

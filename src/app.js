@@ -27,6 +27,7 @@ const directorioPartials = path.join(__dirname, "../partials");
 
 app.use(express.static(directorioPublico));
 hbs.registerPartials(directorioPartials);
+//var userRouters = require('./rutasUsuario');
 
 const listarCurso = () => {
   try {
@@ -136,6 +137,25 @@ app.get("/todoscurso", (req, res) => {
 app.get("/crearCurso", (req, res) => {
   res.render("formuCursos", {
     titulo: "Crear nuevo curso"
+  });
+});
+
+const listarUsuarios = () => {
+  try {
+    listaUsuarios = require("./usuarios.json");
+  } catch (error) {
+    listaUsuarios = [];
+  }
+};
+
+
+app.get("/listaUsuarios", (req, res) => {
+  listarUsuarios()
+  console.log("Invocar funcion")
+  console.log(listaUsuarios)
+  res.render("listaUsuarios", {
+      titulo: "Usuarios asignados",
+      listaUsuarios
   });
 });
 

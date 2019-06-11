@@ -129,3 +129,42 @@ curso.intensidad +
   texto = texto + "</div>";
   return texto;
 });
+
+
+hbs.registerHelper("listaUsuarios", () => {
+  listaUsuario = require("./usuarios.json");
+  let texto =
+    '<table  class = "table table-striped">\
+                <thead class="thead-dark">\
+                <th> Documento ID </th>\
+                <th> Nombre </th>\
+                <th> Correo electronico </th>\
+                <th> Teleono </th>\
+                <th> Tipo de Usuario</th>\
+                </thead>\
+                <tbody>';
+
+  listaUsuario.forEach(usuario => {
+    texto =
+      texto +
+      "<tr>" +
+      "<td>" +
+      usuario.documentoId +
+      "</td>" +
+      "<td>" +
+      usuario.nombre +
+      "</td>" +
+      "<td>" +
+      usuario.correoElectronico +
+      "</td>" +
+      "<td>" +
+      usuario.telefono +
+      "</td>" +
+      "<td>" +
+      usuario.tipoUsuario +
+      '</td> <td> <a class="btn btn-secondary" href="editEstado/'+usuario.documentoId +'"> Editar estado\
+  </a></td></tr>';
+  });
+  texto = texto + "</tbody></table>";
+  return texto;
+});
